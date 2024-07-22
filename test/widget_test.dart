@@ -1,30 +1,28 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:sistema_tareas_1/main.dart';
+import 'package:sistema_tareas_1/main.dart'; // Asegúrate de importar tu aplicación
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Prueba de la pantalla de inicio de sesión', (WidgetTester tester) async {
+    // Construye la aplicación y desencadena un frame.
+    await tester.pumpWidget( MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verifica que el texto "Iniciar Sesión" esté presente en la pantalla.
+    expect(find.text('Iniciar Sesión'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Encuentra el campo de texto de usuario y escribe un valor.
+    await tester.enterText(find.byType(TextFormField).at(0), 'testuser');
+
+    // Encuentra el campo de texto de contraseña y escribe un valor.
+    await tester.enterText(find.byType(TextFormField).at(1), 'password123');
+
+    // Encuentra el botón de inicio de sesión y tócala.
+    await tester.tap(find.byType(ElevatedButton));
+    
+    // Espera que se reconstruya la pantalla.
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verifica que la navegación haya sucedido (esto depende de tu implementación de navegación).
+    expect(find.text('Bienvenido a la pantalla principal'), findsOneWidget);
   });
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/register_Screen.dart'; // Asegúrate de que este archivo exista
-import 'screens/recuperacioncontrasena_screen.dart';
-import 'screens/recordatorios_screen.dart';
-import 'screens/tareas_screen.dart';
+
 import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/recordatorios_screen.dart';
+import 'screens/recuperacioncontrasena_screen.dart';
+import 'screens/register_Screen.dart'; // Asegúrate de que este archivo exista
+import 'screens/tareas_screen.dart';
 
 void main() {
   runApp(MyApp()); // Elimina `const` si el constructor no es `const`
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Color.fromARGB(255, 198, 207, 65),
+          seedColor: Color.fromARGB(255, 185, 214, 57),
         ),
         useMaterial3: true,
       ),
