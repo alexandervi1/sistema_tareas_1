@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'login.dart'; // Asegúrate de que LoginScreen esté definido en este archivo
+import 'package:path_provider/path_provider.dart';
 
 class RegistroScreen extends StatefulWidget {
   const RegistroScreen({super.key});
@@ -14,6 +17,40 @@ class _RegistroScreenState extends State<RegistroScreen> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
+
+  Future<void> _registerUser() async {
+    // Verifica si las contraseñas coinciden
+    if (_password != _confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Las contraseñas no coinciden')),
+      );
+      return;
+    }
+
+    // Obtén el directorio de documentos de la aplicación
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/usuarios.json');
+
+    Map<String, dynamic> users = {};
+
+    // Verifica si el archivo existe
+    if (await file.exists()) {
+      final contents = await file.readAsString();
+      users = jsonDecode(contents);
+    }
+
+    // Agrega el nuevo usuario
+    users[_username] = {
+      'email': _email,
+      'password': _password,
+    };
+
+    // Guarda el archivo actualizado
+    await file.writeAsString(jsonEncode(users));
+
+    // Navega a la pantalla de login
+    Navigator.pushReplacementNamed(context, '/');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +129,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    // Aquí puedes registrar al usuario con la API o base de datos
-                    print('Usuario: $_username, Correo electrónico: $_email, Contraseña: $_password');
-                    // Si el registro es exitoso, navega a la pantalla de login
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    );
+                    _registerUser(); // Llama al método para registrar al usuario
                   }
                 },
                 child: const Text('Registrarse'),
