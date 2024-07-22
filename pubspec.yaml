@@ -1,3 +1,4 @@
+
 name: sistema_tareas_1
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -14,12 +15,12 @@ dependencies:
   cupertino_icons: ^1.0.6
   path_provider: ^2.0.11
   json_annotation: ^4.7.0
-  logging: ^1.1.0 # Agregado para el manejo de logs
-  provider: ^6.1.2 # Agregado para el manejo de estado y inyección de dependencias
+  logging: ^1.1.0
+  provider: ^6.1.2 # Asegúrate de que esta versión sea compatible
   flutter_localizations:
-    sdk: flutter # Para la localización en múltiples idiomas
-  http: ^0.14.0 # Ejemplo de paquete para realizar solicitudes HTTP
-  shared_preferences: ^2.0.6 # Ejemplo de paquete para manejar preferencias compartidas
+    sdk: flutter
+  http: ^1.2.2 # Actualiza a una versión compatible
+  shared_preferences: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -33,4 +34,3 @@ flutter:
 
   assets:
     - assets/usuarios.json
-
