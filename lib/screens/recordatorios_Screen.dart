@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../models/recordatorio.dart';
+import 'add_edit_recordatorio_screen.dart'; // Pantalla para añadir/editar recordatorios
 
 class RecordatoriosScreen extends StatefulWidget {
   @override
@@ -17,8 +19,33 @@ class _RecordatoriosScreenState extends State<RecordatoriosScreen> {
       fecha: DateTime.now().add(Duration(days: 1)),
       hora: TimeOfDay(hour: 14, minute: 45),
     ),
-    // ...
   ];
+
+  void _addOrEditRecordatorio([Recordatorio? recordatorio]) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddEditRecordatorioScreen(recordatorio: recordatorio),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        if (recordatorio == null) {
+          _recordatorios.add(result);
+        } else {
+          final index = _recordatorios.indexOf(recordatorio);
+          _recordatorios[index] = result;
+        }
+      });
+    }
+  }
+
+  void _deleteRecordatorio(Recordatorio recordatorio) {
+    setState(() {
+      _recordatorios.remove(recordatorio);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +63,18 @@ class _RecordatoriosScreenState extends State<RecordatoriosScreen> {
                 '${_recordatorios[index].fecha.day}/${_recordatorios[index].fecha.month}/${_recordatorios[index].fecha.year} ${_recordatorios[index].hora.hour}:${_recordatorios[index].hora.minute}',
               ),
               trailing: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      // Editar recordatorio
+                      _addOrEditRecordatorio(_recordatorios[index]);
                     },
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      // Eliminar recordatorio
+                      _deleteRecordatorio(_recordatorios[index]);
                     },
                   ),
                 ],
@@ -55,20 +83,6 @@ class _RecordatoriosScreenState extends State<RecordatoriosScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Crear nuevo recordatorio
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
-}
-
-class Recordatorio {
-  String titulo;
-  DateTime fecha;
-  TimeOfDay hora;
-
-  Recordatorio({required this.titulo, required this.fecha, required this.hora});
 }

@@ -4,7 +4,7 @@ class TareasScreen extends StatefulWidget {
   const TareasScreen({super.key});
 
   @override
-  State<TareasScreen> createState() => _TareasScreenState();
+  _TareasScreenState createState() => _TareasScreenState();
 }
 
 class _TareasScreenState extends State<TareasScreen> {
@@ -12,10 +12,10 @@ class _TareasScreenState extends State<TareasScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tareas'),
+        title: const Text('Tareas'),
       ),
       body: Center(
-        child: Text('Aquí van las tareas'),
+        child: const Text('Pantalla de tareas'),
       ),
     );
   }

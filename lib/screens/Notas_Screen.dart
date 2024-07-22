@@ -1,4 +1,7 @@
+// lib/screens/notas_screen.dart
 import 'package:flutter/material.dart';
+import '../models/nota.dart';
+import '../services/nota_repository.dart';
 
 class NotasScreen extends StatefulWidget {
   @override
@@ -7,8 +10,30 @@ class NotasScreen extends StatefulWidget {
 
 class _NotasScreenState extends State<NotasScreen> {
   final _formKey = GlobalKey<FormState>();
+  final NotaRepository _notaRepository = NotaRepository();
   String _nota = '';
   String _opcionSeleccionada = 'Opción 1';
+
+  Future<void> _crearNota() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      final nuevaNota = Nota(
+        nota: _nota.trim(),
+        opcionSeleccionada: _opcionSeleccionada,
+      );
+      await _notaRepository.saveNota(nuevaNota);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Nota creada con éxito')),
+      );
+
+      // Limpiar el formulario
+      _formKey.currentState!.reset();
+      setState(() {
+        _opcionSeleccionada = 'Opción 1';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,45 +80,8 @@ class _NotasScreenState extends State<NotasScreen> {
                 }).toList(),
               ),
               SizedBox(height: 20),
-              RadioListTile(
-                title: Text('Opción 1'),
-                value: 'Opción 1',
-                groupValue: _opcionSeleccionada,
-                onChanged: (value) {
-                  setState(() {
-                    _opcionSeleccionada = value!;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: Text('Opción 2'),
-                value: 'Opción 2',
-                groupValue: _opcionSeleccionada,
-                onChanged: (value) {
-                  setState(() {
-                    _opcionSeleccionada = value!;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: Text('Opción 3'),
-                value: 'Opción 3',
-                groupValue: _opcionSeleccionada,
-                onChanged: (value) {
-                  setState(() {
-                    _opcionSeleccionada = value!;
-                  });
-                },
-              ),
-              SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    // Aquí puedes guardar la nota y la opción seleccionada en una base de datos o realizar otra acción
-                    print('Nota: $_nota, Opción: $_opcionSeleccionada');
-                  }
-                },
+                onPressed: _crearNota,
                 child: Text('Crear Nota'),
               ),
             ],

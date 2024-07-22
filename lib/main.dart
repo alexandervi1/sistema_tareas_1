@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:sistema_tareas_1/screens/login.dart';
-import 'package:sistema_tareas_1/screens/recuperacioncontrasena.dart'; // Importar la pantalla de recuperación de contraseña
-import 'package:sistema_tareas_1/screens/register.dart';
-import 'package:sistema_tareas_1/screens/tareas.dart';
+import 'screens/login_screen.dart';
+import 'screens/register_Screen.dart'; // Asegúrate de que este archivo exista
+import 'screens/recuperacioncontrasena_screen.dart';
+import 'screens/recordatorios_screen.dart';
+import 'screens/tareas_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp()); // Elimina `const` si el constructor no es `const`
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sistema tareas Espoch',
+      title: 'Sistema Tareas Espoch',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 198, 207, 65),
+          seedColor: Color.fromARGB(255, 198, 207, 65),
         ),
         useMaterial3: true,
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginScreen(), // Ruta para la pantalla de inicio de sesión
-        '/tareas': (context) => const TareasScreen(), // Ruta para la pantalla de tareas
-        '/registro': (context) => const RegistroScreen(), // Ruta para la pantalla de registro
-        '/recuperacion': (context) => const RecuperacionContrasenaScreen(), // Ruta para la pantalla de recuperación de contraseña
+        '/': (context) => LoginScreen(),
+        '/tareas': (context) => TareasScreen(),
+        '/register': (context) => RegistroScreen(),
+        '/recuperacion': (context) => RecuperacionContrasenaScreen(),
+        '/home': (context) => HomeScreen(),
+        '/recordatorios': (context) => RecordatoriosScreen(),
       },
     );
   }
